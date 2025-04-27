@@ -1,0 +1,29 @@
+name: CI/CD pipeline
+
+on:
+  push:
+    branches: [main,dev]
+  pull:
+    branches: [main,dev]
+
+job:
+  test:
+    runs-on: ubuntu-latest
+    steps: 
+      - uses: actions/checkout@v3
+      - name: Set up Node.js 
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+      - name: Backend - Install dependencies 
+        working-directory: ./backend 
+        run: npm ci
+      - name: Backend - Run tests
+        working-directory: ./backend 
+        run: npm test 
+      - name: Frontend - Install Dependencies 
+        working-directory: ./frontend 
+        run: npm ci 
+      - name: Frontend - Run tests 
+        working-directory: ./frontend 
+        run: npm test
